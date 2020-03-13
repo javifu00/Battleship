@@ -8,9 +8,9 @@ ermo,ermo dogs ,29, Ninguno, 0, 100
 labarba, James, 31, Masculino, 22, 7
 elapache10, Carlos, 38, Masculino, 26, 5
 javifu00, Javier, 19, Masculino, 26, 5
-elconde, Conde, 78, Masculino, 26, 5
+elconde, Conde, 78, Ninguno, 26, 5
 diego, Diego Andujar, 56, Masculino, 22, 7
 elpresi, Lopez Obrador, 68, Masculino, 20, 8
 carma, Carma Perez, 24, Femenino, 0, 100
-mami34, La Mami, 56, Femenino, 26, 5
-elprisas, Prisas, 23, Masculino, 28, 4
+mami34, la mamita, 50, Femenino, 26, 5
+elprisas2, Prisas, 23, Femenino, 28, 4

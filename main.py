@@ -443,7 +443,7 @@ def ver(edit = False):
         datos = bd.readlines()
     for x in datos:
         usuario = x[:-1].split(',') # [:-1] para quitar el salto de linea
-        usuarios.append(Usuario(usuario[0], usuario[1], usuario[2], usuario[3]))
+        usuarios.append(Usuario(usuario[0], usuario[1], usuario[2], usuario[3], usuario[4], usuario[5]))
     #usuarios = sorted(usuarios, key= lambda user: user.username)
     if not edit:
         usuarios.sort(key= lambda user: user.username)
@@ -466,13 +466,20 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
         datos = bd.readlines()
         user = datos[elegir - 1][:-1].split(",")
     if eleccion == 1:
-        user[eleccion - 1] = input("Ahora ingrese su nuevo dato: ")
-        validacion_username = user[el].islower()
-            while validacion_username == False or len(username) > 30 or " " in username:
-                print("{}Su usuario solo puede contener minusculas y numeros sin ningun espacio{}\n".format(Fore.LIGHTRED_EX, Fore.RESET))
-                username = input("Ingerese su username nuevamente: ")
-                validacion_username = username.islower()
-    nuevo_valor = ""
+        dato = input("Ahora ingrese su nuevo username: ")
+    elif eleccion == 2:
+        user[eleccion - 1] = input("Ahora ingrese su nuevo nombre: ")
+    elif eleccion == 3:
+        user[eleccion - 1] = input("Ahora ingrese su nueva edad:")
+    elif eleccion == 4:
+        user[eleccion - 1] = int(input("Ahora ingrese su genero: \n1) Femenino \n2) Masculino \n3) Ninguno\n"))
+        if user[eleccion - 1] == 1:
+            user[eleccion - 1] = "Femenino"
+        elif user[eleccion - 1] == 2:
+            user[eleccion - 1] = "Masculino"
+        elif user[eleccion - 1] == 3:
+            user[eleccion - 1] = "Ninguno"
+    nuevo_valor = " "
     for x in range(len(user)):
         if x != len(user) - 1:
             nuevo_valor += user[x] + ','
