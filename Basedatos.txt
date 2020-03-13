@@ -1,0 +1,16 @@
+elbromas, Bromas, 45, Masculino, 26, 5
+elsa, Elsaman, 23,Masculino, 30, 3
+carmenola, Carmen, 67, Femenino, 10, 13
+perrito, Bethoven Segundo, 56, Ninguno, 22, 7
+carlangas, Carlos, 89, Masculino, 24, 6
+led, Led Varela, 35, Ninguno, 20, 8
+ermo,ermo dogs ,29, Ninguno, 0, 100
+labarba, James, 31, Masculino, 22, 7
+elapache10, Carlos, 38, Masculino, 26, 5
+javifu00, Javier, 19, Masculino, 26, 5
+elconde, Conde, 78, Masculino, 26, 5
+diego, Diego Andujar, 56, Masculino, 22, 7
+elpresi, Lopez Obrador, 68, Masculino, 20, 8
+carma, Carma Perez, 24, Femenino, 0, 100
+mami34, La Mami, 56, Femenino, 26, 5
+elprisas, Prisas, 23, Masculino, 28, 4
