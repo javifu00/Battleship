@@ -235,6 +235,10 @@ def ubicar_naves():
     ubicar_fragata()
     ubicar_submarino()
 
+
+
+
+
 def juego():
     ubicar_naves()
     global disparos_acertados, disparos_efectuados, disparos_elegidos, disparos_fallidos, disparos_repetidos
