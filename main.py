@@ -466,20 +466,49 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
         datos = bd.readlines()
         user = datos[elegir - 1][:-1].split(",")
     if eleccion == 1:
-        dato = input("Ahora ingrese su nuevo username: ")
+        user[eleccion - 1] = input("Ahora ingrese su nuevo username: ") 
+        validacion_username = user[eleccion - 1].islower()
+        while validacion_username == False or len(user[eleccion - 1]) > 30 or " " in user[eleccion - 1]:
+            print("{}Su usuario solo puede contener minusculas y numeros sin ningun espacio{}\n".format(Fore.LIGHTRED_EX, Fore.RESET))
+            user[eleccion - 1] = input("Ingerese su username nuevamente: ")
+            validacion_username = user[eleccion - 1].islower()
+        usuario_partida.clear()
+        usuario_partida.append(user[eleccion - 1])
     elif eleccion == 2:
         user[eleccion - 1] = input("Ahora ingrese su nuevo nombre: ")
+        verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
+        while verificacion_nombre == False:
+                print("{}Su nombre solo puede tener letras{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+                user[eleccion - 1] = input("Ingrese su nombre completo: ")
+                verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
+        user[eleccion - 1] = user[eleccion - 1].title()
+        user[eleccion - 1] = " " + user[eleccion - 1]  
     elif eleccion == 3:
-        user[eleccion - 1] = input("Ahora ingrese su nueva edad:")
+        while True: #Validacion para edad
+            try:
+                user[eleccion - 1] = int(input("Ingresa su edad: "))
+                if user[eleccion - 1] < 5 or user[eleccion - 1] > 100:
+                    raise  ValueError
+                break
+            except ValueError:
+                print("{}Tu edad no es adecuada para jugar{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+        user[eleccion - 1] = " " + str(user[eleccion - 1]) 
     elif eleccion == 4:
-        user[eleccion - 1] = int(input("Ahora ingrese su genero: \n1) Femenino \n2) Masculino \n3) Ninguno\n"))
-        if user[eleccion - 1] == 1:
-            user[eleccion - 1] = "Femenino"
-        elif user[eleccion - 1] == 2:
-            user[eleccion - 1] = "Masculino"
-        elif user[eleccion - 1] == 3:
-            user[eleccion - 1] = "Ninguno"
-    nuevo_valor = " "
+        while True: #Validacion para genero
+                try:
+                    user[eleccion - 1] = int(input("Ingrese su genero: \n1) Femenino \n2) Masculino \n3) Ninguno\n"))
+                    if user[eleccion - 1] < 1 or user[eleccion - 1] > 3:
+                        raise  ValueError
+                    if user[eleccion - 1] == 1:
+                        user[eleccion - 1] = " Femenino"
+                    elif user[eleccion - 1] == 2: 
+                        user[eleccion - 1] = " Masculino"
+                    elif user[eleccion - 1] == 3:
+                        user[eleccion - 1] = " Ninguno"
+                    break
+                except ValueError:
+                    print("{}El valor ingresado no es valido{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+    nuevo_valor = ""
     for x in range(len(user)):
         if x != len(user) - 1:
             nuevo_valor += user[x] + ','
@@ -505,33 +534,80 @@ Selecciona lo que quieras hacer
 4) Ver estadisticas
 5) Salir del Juego
 """)
-        elegir = input("{}Ingrese su opcion: {}".format(Fore.LIGHTYELLOW_EX, Fore.RESET))
-        validacion_elegir = elegir.isdigit()
-        while validacion_elegir == False or int(elegir)<1 or int(elegir)>5:
-            print("{}Ingresaste mal la opcion, intenta de nuevo{}".format(Fore.LIGHTRED_EX, Fore.RESET))
-            elegir = input("Ingrese su opcion: ")
-            validacion_elegir = elegir.isdigit()
-        if elegir == "1":
+        while True:
+            try:
+                elegir = int(input("{}Ingrese su opcion: {}".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
+                if elegir < 1 or elegir > 5:
+                    raise  ValueError
+                break
+            except ValueError:
+                print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+        if elegir == 1:
             print("\n")
             lista_usuarios.append(datos_usuario())
             juego()
-        elif elegir == "2":
+            while True: 
+                try:
+                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    if seguir < 1 or seguir > 2:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            if seguir == 1:
+                continuar_jugando = True
+            else: continuar_jugando = False
+        elif elegir == 2:
             print("\n")
             ver(edit = True)
             seleccion = int(input("Seleccione el usuario que desee actualizar: "))
             actualizar_datos(seleccion)
-        elif elegir == "3":
+            while True: 
+                try:
+                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    if seguir < 1 or seguir > 2:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            if seguir == 1:
+                continuar_jugando = True
+            else: continuar_jugando = False
+        elif elegir == 3:
             top_10()
-        elif elegir == "4":
+            while True: 
+                try:
+                    seguir = int(input("Ingresa una de las opciones:\n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    if seguir < 1 or seguir > 2:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            if seguir == 1:
+                continuar_jugando = True
+            else: continuar_jugando = False
+        elif elegir == 4:
             print("\n")
             promedio_disparos()
             sleep(1.5)
             puntos_genero()
             sleep(1.5)
             usuarios_edades()
-        elif elegir == "5":
-            print("Te deseamos un feliz dia, gracias por jugar Battleship")
+            while True: 
+                try:
+                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    if seguir < 1 or seguir > 2:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            if seguir == 1:
+                continuar_jugando = True
+            else: continuar_jugando = False
+        elif elegir == 5:
             continuar_jugando = False
+    print("Te deseamos un feliz dia, gracias por jugar Battleship\n")
+    sleep(1,25)
     top_10()
 
 main()
