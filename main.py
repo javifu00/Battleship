@@ -235,10 +235,6 @@ def ubicar_naves():
     ubicar_fragata()
     ubicar_submarino()
 
-
-
-
-
 def juego():
     ubicar_naves()
     global disparos_acertados, disparos_efectuados, disparos_elegidos, disparos_fallidos, disparos_repetidos
@@ -469,8 +465,13 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
         user = datos[elegir - 1][:-1].split(",")
-    user[eleccion - 1] = input("Ahora ingrese su nuevo dato: ")
-    # if user[eleccion - 1] == 1:
+    if eleccion == 1:
+        user[eleccion - 1] = input("Ahora ingrese su nuevo dato: ")
+        validacion_username = user[el].islower()
+            while validacion_username == False or len(username) > 30 or " " in username:
+                print("{}Su usuario solo puede contener minusculas y numeros sin ningun espacio{}\n".format(Fore.LIGHTRED_EX, Fore.RESET))
+                username = input("Ingerese su username nuevamente: ")
+                validacion_username = username.islower()
     nuevo_valor = ""
     for x in range(len(user)):
         if x != len(user) - 1:
