@@ -393,7 +393,7 @@ def top_10():
     for x in usuarios_top: #se almacenaran solo los 10 primeros usuarios en otra lista y se mostraran
         usuarios.append(x)
         if len(usuarios) <= 10:
-            print(Fore.LIGHTMAGENTA_EX + " "*60, x[0], "-"*5 + ">", x[4] +"pts", "--" + x[5], "disparos" + Fore.RESET)
+            print(Fore.LIGHTMAGENTA_EX + " "*58, x[0], "-"*5 + ">", x[4] +"pts", "--" + x[5], "disparos" + Fore.RESET)
         else: break
     print("\n")
 
@@ -567,12 +567,26 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
     with open("Basedatos.txt", "w") as bd: #se reescribe el archivo txt con el valor del usuario modificado 
         bd.writelines(datos)
 
+def titulo():
+    """
+    muestra la presentacion inicial del programa
+    """
+    print("\n" + Fore.WHITE + " "*70 + "SAMAN")
+    sleep(1)
+    print(" "*75 + "GAMES\n" + Fore.RESET)
+    sleep(1)
+    print(" "*71 + Fore.LIGHTBLACK_EX + "Presenta\n" + Fore.RESET)
+    sleep(1.25)
+    print(" "*66 + Fore.LIGHTBLUE_EX + "███ " + "BATTLESHIP" + " ███" + Fore.RESET)
+    sleep(1)
+
 def main():
     """
     se va a mostrar el menu principal y se llaman a todas las funciones para correr el programa
     """
+    titulo()
     top_10() #muestra el top10 cada vez que se inicie el juego
-    print("{}Bienvenido a BATTLESHIP ¿crees tener lo necesario para hundir mi flota?{}".format(Fore.BLUE, Fore.RESET))
+    print("{}Bienvenido ¿crees tener lo necesario para hundir mi flota?{}".format(Fore.BLUE, Fore.RESET))
     sleep(2)
     print("{}No lo creo JAJAJA{}".format(Fore.RED, Fore.RESET))
     continuar_jugando = True
