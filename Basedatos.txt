@@ -1,6 +1,13 @@
 elpietro, Pietro Rodriguez, 58, Masculino, 56, 26
-badbunny, Benito, 35, Masculino, 78, 15
 labarba, James, 32, Masculino, 54, 27
-elbromas, Bromas, 48, Masculino, 28, 40
 javifu00, Javier Fuenmayor, 19, Masculino, 60, 24
 alex10, Alex Morgan, 35, Femenino, 58, 25
+lukita, Luka Doncic, 21, Masculino, 32, 38
+badbunny, Benito, 35, Masculino, 78, 15
+elbromas, Bromas, 48, Masculino, 28, 40
+planb, Chencho Corleone, 45, Masculino, 8, 50
+billylesh, Billie Eilish, 19, Femenino, 32, 38
+larosalia99, La Rosalia, 23, Femenino, 48, 30
+thejudge, Aaron Judge, 23, Masculino, 48, 30
+trumpeta, Donald Trump, 68, Masculino, 70, 19
+coronavirus, Corona Virus, 100, Ninguno, 90, 9

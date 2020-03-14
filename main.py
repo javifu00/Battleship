@@ -127,11 +127,11 @@ def mostrar_tablero(tablero):
     for x in range(1, numero_columnas+1):
         y = str(x)
         numeros_de_fila.append(y)
-    print("   " + " ".join(numeros_de_fila)) #fila de numeros que designa las columnas
+    print(Fore.MAGENTA + "   " + " ".join(numeros_de_fila)) #fila de numeros que designa las columnas
     for w in range(numero_columnas):
         if w < 9:
-            print(str(w + 1) + "  " + " ".join(str(x) for x in tablero[w])) #sale primero el numero de la fila y luego imprime la fila del tablero
-        else: print(str(w + 1) + " " + " ".join(str(x) for x in tablero[w]))
+            print(Fore.MAGENTA + str(w + 1) + Fore.RESET + "  " + " ".join(str(x) for x in tablero[w])) #sale primero el numero de la fila y luego imprime la fila del tablero
+        else: print(Fore.MAGENTA + str(w + 1) + Fore.RESET + " " + " ".join(str(x) for x in tablero[w]))
     print("\n")
 
 #Funciones para ubicar los barcos
@@ -389,7 +389,8 @@ def top_10():
     for x in datos:
         y = x[:-1].split(",")
         usuarios_top.append(y)
-    usuarios_top = sorted(usuarios_top, key=lambda x: x[4], reverse=True) #ordena la lista de los usuarios por el puntaje
+    usuarios_top.sort(key=lambda usuarios_top: int(usuarios_top[4]), reverse=True) #ordena la lista de los usuarios por el puntaje
+    print(usuarios_top)
     print(Fore.LIGHTRED_EX, " "*70, "TOP 10", Fore.RESET)
     usuarios = []
     for x in usuarios_top: #se almacenaran solo los 10 primeros usuarios en otra lista y se mostraran
@@ -713,4 +714,5 @@ def main():
     sleep(1.25)
     top_10()
 
-main()
+# main()
+top_10()
