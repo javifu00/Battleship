@@ -7,8 +7,8 @@ from colorama import Fore
 tablero = []
 numero_filas = 10
 numero_columnas = 10
-orientaciones = ("Vertical", "Horizontal")
-lista_ubicacion_barco = []  
+orientaciones = ("Vertical", "Horizontal") #tupla que se usara para definir aleatoriamente la orientacion de los barcos mayores a 1 posicion
+lista_ubicacion_barco = []  #lista donde se ubicaran las posiciones de cada uno de los barcos
 lista_temporal = []
 coordenadas_portaviones = []
 coordenadas_fragata = []
@@ -26,6 +26,9 @@ usuario_partida = []
 lista_top_10 = []
 
 def datos_usuario():
+    """
+    Aqui el usuario va a ingresar sus datos (username, nombre, edad y genero)
+    """
     usuario_partida.clear()
     puntaje = 0
     disparos_efectuados = 100
@@ -37,7 +40,7 @@ def datos_usuario():
         with open("BaseDatos.txt", "r") as bd:
             datos = bd.readlines()
         for x in datos:
-            usuario = x[:-1].split(',') # [:-1] para quitar el salto de linea
+            usuario = x[:-1].split(',') #si el username esta en la base de datos no necesita ingresar sus datos
             usuarios.append(usuario[0])
             if username in usuarios:
                 print("Veo que ya has jugado antes, gracias por volver :)\n")
@@ -66,14 +69,14 @@ def datos_usuario():
                 username_repetido = False
         else:
             validacion_username = username.islower()
-            while validacion_username == False or len(username) > 30 or " " in username:
+            while validacion_username == False or len(username) > 30 or " " in username: #Validacion para username
                 print("{}Su usuario solo puede contener minusculas y numeros sin ningun espacio{}\n".format(Fore.LIGHTRED_EX, Fore.RESET))
                 username = input("Ingerese su username nuevamente: ")
                 validacion_username = username.islower()
             usuario_partida.append(username)
             nombre = input("Ingrese su nombre completo: ")
             verificacion_nombre = nombre.replace(" ", "").isalpha()
-            while verificacion_nombre == False:
+            while verificacion_nombre == False: #Validacion para nombre
                     print("{}Su nombre solo puede tener letras{}".format(Fore.LIGHTRED_EX, Fore.RESET))
                     nombre = input("Ingrese su nombre completo: ")
                     verificacion_nombre = nombre.replace(" ", "").isalpha()
@@ -106,33 +109,42 @@ def datos_usuario():
             username_repetido = False
 
 def crear_tablero(tablero): 
+    """
+    Se creara la matriz 10x10 para el tablero
+    """
     for x in range(numero_filas):
         completar_tablero = ["O"] * numero_columnas
         tablero.append(completar_tablero) 
     return tablero
 
 def mostrar_tablero(tablero):
+    """
+    esta funcion se encarga de imprimir el tablero listo para jugar y que se vea mejor
+    """
     numeros_de_fila = []
     for x in range(1, numero_columnas+1):
         y = str(x)
         numeros_de_fila.append(y)
-    print("   " + " ".join(numeros_de_fila))
+    print("   " + " ".join(numeros_de_fila)) #fila de numeros que designa las columnas
     for w in range(numero_columnas):
         if w < 9:
-            print(str(w + 1) + "  " + " ".join(str(x) for x in tablero[w]))
+            print(str(w + 1) + "  " + " ".join(str(x) for x in tablero[w])) #sale primero el numero de la fila y luego imprime la fila del tablero
         else: print(str(w + 1) + " " + " ".join(str(x) for x in tablero[w]))
     print("\n")
 
-#definiciones para comenzar el juego
+#definiciones para ubicar los barcos
 def ubicar_portaviones():
-    tamano = Portaviones.tamano
-    cantidad = Portaviones.cantidad
-    orientacion = orientaciones[(randint(0, 1))]
+    """
+    definicion que ubica el barco mas grande (3 posiciones)
+    """
+    tamano = Portaviones.tamano #se importa el tamano del barco de su clase
+    cantidad = Portaviones.cantidad #se importa la cantidad de barcos de este tamano desde su clase
+    orientacion = orientaciones[(randint(0, 1))] #elige aleatoriamente el index de una tupla que tiene 2 valores horizontal y vertical
     while cantidad > 0:
         if orientacion == "Vertical":
             coor_fila = randint(1, numero_filas)
             coor_columna = randint(1, numero_columnas)
-            while (coor_fila + tamano) > 10:
+            while (coor_fila + tamano) > 10: 
                 coor_fila = randint(1,numero_filas)
             ubicacion = (coor_fila, coor_columna)
             lista_temporal.append(ubicacion)
@@ -159,6 +171,9 @@ def ubicar_portaviones():
         cantidad -= 1
 
 def ubicar_fragata():
+    """
+    se encarga de ubicar el segundo barco mas grande (2 posiciones)
+    """
     tamano = Fragata.tamano
     cantidad = Fragata.cantidad
     orientacion = orientaciones[(randint(0, 1))]
@@ -180,7 +195,7 @@ def ubicar_fragata():
                 for y in lista_temporal:
                     if x == y:
                         mal_ubicado = "si"
-                    elif (y[0] == x[0] or (y[0]+1) == x[0] or (y[0]-1) == x[0]) and ((y[1]) == x[1] or (y[1]+1) == x[1] or (y[1]- 1) == x[1]):
+                    elif (y[0] == x[0] or (y[0]+1) == x[0] or (y[0]-1) == x[0]) and ((y[1]) == x[1] or (y[1]+1) == x[1] or (y[1]- 1) == x[1]): #validacion para que no se ubique el barco al lado o diagonalmente cercano a otro
                         mal_ubicado = "si"
         if orientacion == "Horizontal":
             coor_fila = randint(1, numero_filas)
@@ -197,19 +212,22 @@ def ubicar_fragata():
                 for y in lista_temporal:
                     if x == y:
                         mal_ubicado = "si"
-                    elif (y[0] == x[0] or (y[0]+1) == x[0] or (y[0]-1) == x[0]) and ((y[1]) == x[1] or (y[1]+1) == x[1] or (y[1]- 1) == x[1]):
+                    elif (y[0] == x[0] or (y[0]+1) == x[0] or (y[0]-1) == x[0]) and ((y[1]) == x[1] or (y[1]+1) == x[1] or (y[1]- 1) == x[1]):  #validacion para que no se ubique el barco al lado o diagonalmente cercano a otro
                         mal_ubicado = "si"
         if mal_ubicado == "si":
             seguir_coordenadas = True
             lista_temporal.clear()
         elif mal_ubicado == "no": 
             for x in lista_temporal:
-                # lista_ubicacion_barco.append(x)
+                lista_ubicacion_barco.append(x)
                 coordenadas_fragata.append(x)
             lista_temporal.clear()
             seguir_coordenadas = False
 
 def ubicar_submarino():
+    """
+    se encarga de ubicar las naves mas pequenas (1 posicion)
+    """
     tamano = Submarinos.tamano
     cantidad = Submarinos.cantidad
     while cantidad > 0:
@@ -220,15 +238,21 @@ def ubicar_submarino():
         for x in lista_ubicacion_barco:
             if x == ubicacion:
                 mal_ubicado = "si"
-            elif (ubicacion[0] == x[0] or (ubicacion[0]+1) == x[0] or (ubicacion[0]-1) == x[0]) and ((ubicacion[1]) == x[1] or (ubicacion[1]+1) == x[1] or (ubicacion[1]- 1) == x[1]):
+            #validacion para que cada uno de los barcos no queden contiguos entre si
+            elif (ubicacion[0] == x[0] or (ubicacion[0]+1) == x[0] or (ubicacion[0]-1) == x[0]) and ((ubicacion[1]) == x[1] or (ubicacion[1]+1) == x[1] or (ubicacion[1]- 1) == x[1]): 
                 mal_ubicado = "si"
         if mal_ubicado == "no":
-            cantidad -= 1
-            # lista_ubicacion_barco.append(ubicacion)
+            cantidad -= 1 #se resta uno a la cantidad de los barcos porque ya este se posiciono correctamente
+            lista_ubicacion_barco.append(ubicacion) #si el barco no es contiguo con ningun otro barco se agrega a la lista de los barcos ya posicionados
         elif mal_ubicado == "si":
-            cantidad = cantidad
+            cantidad = cantidad #la cantidad de barcos se mantiene igual porque el barco quedo contiguo a otro, se repite el proceso d eubicacion para este barco
 
 def ubicar_naves():
+    """
+    se encarga de llamar a cada una de las funciones para ubicar los barcos por orden,
+    se borra el tablero existente para crear uno nuevo y que la partida empiece con un tablero sin modificaciones
+    y con los barcos ya ubicados
+    """
     tablero.clear()
     crear_tablero(tablero)
     ubicar_portaviones()
@@ -236,8 +260,13 @@ def ubicar_naves():
     ubicar_submarino()
 
 def juego():
+    """
+    funcion que contiene todo lo que sucede desde que se empieza a jugar,
+    tiene los contadores para las categorias de disparo y puntaje
+    """
     ubicar_naves()
     global disparos_acertados, disparos_efectuados, disparos_elegidos, disparos_fallidos, disparos_repetidos
+    #contadores
     disparos_efectuados = 0
     disparos_acertados = 0
     disparos_fallidos = 0
@@ -249,7 +278,7 @@ def juego():
     sleep(3)
     mostrar_tablero(tablero)
     while len(lista_ubicacion_barco) > 0:
-        while True:
+        while True: #validacion para la fila ingresada por el usuario
             try:
                 elegir_fila = int(input("Ingresa una fila: "))
                 if elegir_fila < 1 or (elegir_fila >10 and elegir_fila != 24):
@@ -258,7 +287,7 @@ def juego():
             except ValueError:
                 print("{}No existe dicha fila{}".format(Fore.LIGHTRED_EX, Fore.RESET))
         # validar_fila = elegir_fila.isdigit()
-        while True:
+        while True: #validacion para la columna ingresada por el usuario
             try:
                 elegir_columna = int(input("Ingresa una columna: "))
                 if elegir_columna < 1 or (elegir_columna >10):
@@ -266,21 +295,22 @@ def juego():
                 break
             except ValueError:
                 print("{}No existe dicha fila{}".format(Fore.LIGHTRED_EX, Fore.RESET))
-        tiro_elegido = (elegir_fila, elegir_columna)
+        tiro_elegido = (elegir_fila, elegir_columna) #cada tiro se almacena en una lista
         if tiro_elegido[0] == 24:
             print("Has accedido a un cheat code, los barcos estan en: ",lista_ubicacion_barco)
-        elif tiro_elegido in disparos_elegidos:
+        elif tiro_elegido in disparos_elegidos: #si la coordenada ingresada por el usuario ya la ingreso anteriormente, quedo guardada en la lista y no le va a contar como disparo efectuadao
             print("Este disparo ya lo has hecho antes :|")
             disparos_repetidos += 1
         elif tiro_elegido in lista_ubicacion_barco:
             disparos_elegidos.append(tiro_elegido)
             print("Has acertado\n")
-            tablero[elegir_fila - 1][elegir_columna - 1] = "{}F{}".format(Fore.RED, Fore.RESET)
+            tablero[elegir_fila - 1][elegir_columna - 1] = "{}F{}".format(Fore.RED, Fore.RESET) #se remplaza la coordenada acertada por una F roja
             lista_ubicacion_barco.remove(tiro_elegido)
             disparos_efectuados += 1
             disparos_acertados += 1
             puntaje += 10
-            if tiro_elegido in coordenadas_portaviones:
+            #se verifica si la coordenada ingresada pertenece a alguna coordenada almacenada en las listas de cada barco
+            if tiro_elegido in coordenadas_portaviones: 
                 coordenadas_portaviones.remove(tiro_elegido)
                 if len(coordenadas_portaviones) == 0:
                     print("Felicitaciones has hundido el portaviones, su ataque aereo quedo neutralizado\n")
@@ -295,7 +325,7 @@ def juego():
         else:
             disparos_elegidos.append(tiro_elegido)
             print("Has fallado\n")
-            tablero[elegir_fila - 1][elegir_columna - 1] = "{}X{}".format(Fore.BLUE, Fore.RESET)
+            tablero[elegir_fila - 1][elegir_columna - 1] = "{}X{}".format(Fore.BLUE, Fore.RESET) #se remplaza la coordenada errada por una X azul
             disparos_efectuados += 1
             disparos_fallidos += 1
             puntaje -= 2
@@ -314,13 +344,14 @@ def juego():
     sleep(0.7)
     print("\nCargando tus estadisticas :| .......... pssss deberias probar el numero de kobe en fila\n")
     sleep(2.5)
-    for x in usuario_partida:
+    for x in usuario_partida: #usuario_partida almacena el usuario de cada partida, se borra la lista cuando se ingresa otro jugador
         print("{}{} tus estadisticas fueron las siguientes:{}".format(Fore.YELLOW,x, Fore.RESET))
     print("Disparos realizados = {}".format(disparos_efectuados))
     print("Puntaje total = {}".format(puntaje))
     print("Disparos repetidos = {}".format(disparos_repetidos))
     print("Tu tablero quedo asi:")
     mostrar_tablero(tablero)
+    #se agregaran los puntajes y disparos del usuario a la base de datos en el txt
     for x in usuario_partida:
         y = x
     with open("Basedatos.txt", "r") as bd:
@@ -331,9 +362,9 @@ def juego():
         if y in x:
             index = datos.index(x)
             puntos = x[:-1].split(",")
-            if int(puntos[4]) < puntaje:
+            if int(puntos[4]) < puntaje: #si el usuario ya tiene un puntaje se va a almacenar en el txt el que sea mayor (puede ser el viejo o el que acaba de obtener)
                 puntos[4] = " {}".format(puntaje)
-            if int(puntos[5]) > disparos_efectuados:
+            if int(puntos[5]) > disparos_efectuados: #si el usuario ya ha jugado se va a almacenar en el txt la menor cantidad de disparos que haya obtenido 
                 puntos[5] = " {}".format(disparos_efectuados)
     for x in range(len(puntos)):
         if x != len(puntos) - 1:
@@ -341,10 +372,14 @@ def juego():
         else:
             nuevo_valor += puntos[x] + "\n"
     datos[index] = nuevo_valor
-    with open("Basedatos.txt", "w") as bd:
+    with open("Basedatos.txt", "w") as bd: #se reescribira el txt con los datos del usuario que jugo la partida actualizados
         bd.writelines(datos)
 
 def top_10():
+    """
+    lee el documento Basedatos.txt y almacena en una lista los 10 usuarios con el puntaje mas alto
+    y los muestra en orden
+    """
     print("\n")
     usuarios_top = []
     with open("Basedatos.txt", "r") as bd:
@@ -352,10 +387,10 @@ def top_10():
     for x in datos:
         y = x[:-1].split(",")
         usuarios_top.append(y)
-    usuarios_top = sorted(usuarios_top, key=lambda x: x[4], reverse=True)
+    usuarios_top = sorted(usuarios_top, key=lambda x: x[4], reverse=True) #ordena la lista de los usuarios por el puntaje
     print(Fore.LIGHTRED_EX, " "*70, "TOP 10", Fore.RESET)
     usuarios = []
-    for x in usuarios_top:
+    for x in usuarios_top: #se almacenaran solo los 10 primeros usuarios en otra lista y se mostraran
         usuarios.append(x)
         if len(usuarios) <= 10:
             print(Fore.LIGHTMAGENTA_EX + " "*60, x[0], "-"*5 + ">", x[4] +"pts", "--" + x[5], "disparos" + Fore.RESET)
@@ -363,6 +398,9 @@ def top_10():
     print("\n")
 
 def puntos_genero():
+    """
+    se saca el puntaje total para cada genero
+    """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
     genero = []
@@ -386,6 +424,9 @@ def puntos_genero():
     print("Los puntos totales por usuarios que decidieron no especificar su genero son: {}".format(puntos_ninguno))
 
 def usuarios_edades():
+    """
+    muestra el rango de edad de los usuarios que mas han jugado
+    """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
     lista_max_edades = []
@@ -425,6 +466,9 @@ def usuarios_edades():
     print("Los usuarios que mas juegan estan entre las edades de {} años".format(rango))
 
 def promedio_disparos():
+    """
+    saca el promedio de la cantidad de disparos para ganar entre todos los usuarios 
+    """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
     disparos_totales = 0
@@ -437,22 +481,27 @@ def promedio_disparos():
     print("Los disparos totales en promedio para ganar fueron: {}".format(disparos_totales))
 
 def ver(edit = False):
+    """
+    le muestra al usuario los usuarios que ya estan registrados en la base de datos
+    """
     print("\nEstos son los usuarios registrados actualmente:\n")
     usuarios = []
     with open("BaseDatos.txt", "r") as bd:
         datos = bd.readlines()
     for x in datos:
-        usuario = x[:-1].split(',') # [:-1] para quitar el salto de linea
+        usuario = x[:-1].split(',')
         usuarios.append(Usuario(usuario[0], usuario[1], usuario[2], usuario[3], usuario[4], usuario[5]))
-    #usuarios = sorted(usuarios, key= lambda user: user.username)
     if not edit:
         usuarios.sort(key= lambda user: user.username)
-    for n, y in enumerate(usuarios):
+    for n, y in enumerate(usuarios): #imprime cada uno de los usuarios
         print('='*5, n+1, '='*5)
         print(y)
         print("\n")
 
 def actualizar_datos(elegir):
+    """
+    muestra los datos que se pueden cambiar, el usuario selecciona el que quiera modificar e ingresa el nuevo valor
+    """
     print("""
 ¿Qué dato desea modificar?
 1 - Username
@@ -468,7 +517,7 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
     if eleccion == 1:
         user[eleccion - 1] = input("Ahora ingrese su nuevo username: ") 
         validacion_username = user[eleccion - 1].islower()
-        while validacion_username == False or len(user[eleccion - 1]) > 30 or " " in user[eleccion - 1]:
+        while validacion_username == False or len(user[eleccion - 1]) > 30 or " " in user[eleccion - 1]: #validacion para el nuevo username
             print("{}Su usuario solo puede contener minusculas y numeros sin ningun espacio{}\n".format(Fore.LIGHTRED_EX, Fore.RESET))
             user[eleccion - 1] = input("Ingerese su username nuevamente: ")
             validacion_username = user[eleccion - 1].islower()
@@ -477,14 +526,14 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
     elif eleccion == 2:
         user[eleccion - 1] = input("Ahora ingrese su nuevo nombre: ")
         verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
-        while verificacion_nombre == False:
+        while verificacion_nombre == False: #validacion para el nuevo nombre
                 print("{}Su nombre solo puede tener letras{}".format(Fore.LIGHTRED_EX, Fore.RESET))
                 user[eleccion - 1] = input("Ingrese su nombre completo: ")
                 verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
         user[eleccion - 1] = user[eleccion - 1].title()
         user[eleccion - 1] = " " + user[eleccion - 1]  
     elif eleccion == 3:
-        while True: #Validacion para edad
+        while True: #Validacion para la nueva edad
             try:
                 user[eleccion - 1] = int(input("Ingresa su edad: "))
                 if user[eleccion - 1] < 5 or user[eleccion - 1] > 100:
@@ -494,7 +543,7 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
                 print("{}Tu edad no es adecuada para jugar{}".format(Fore.LIGHTRED_EX, Fore.RESET))
         user[eleccion - 1] = " " + str(user[eleccion - 1]) 
     elif eleccion == 4:
-        while True: #Validacion para genero
+        while True: #Validacion para el nuevo genero
                 try:
                     user[eleccion - 1] = int(input("Ingrese su genero: \n1) Femenino \n2) Masculino \n3) Ninguno\n"))
                     if user[eleccion - 1] < 1 or user[eleccion - 1] > 3:
@@ -515,11 +564,14 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
         else:
             nuevo_valor += user[x] + '\n'
     datos[elegir - 1] = nuevo_valor
-    with open("Basedatos.txt", "w") as bd:
+    with open("Basedatos.txt", "w") as bd: #se reescribe el archivo txt con el valor del usuario modificado 
         bd.writelines(datos)
 
 def main():
-    top_10()
+    """
+    se va a mostrar el menu principal y se llaman a todas las funciones para correr el programa
+    """
+    top_10() #muestra el top10 cada vez que se inicie el juego
     print("{}Bienvenido a BATTLESHIP ¿crees tener lo necesario para hundir mi flota?{}".format(Fore.BLUE, Fore.RESET))
     sleep(2)
     print("{}No lo creo JAJAJA{}".format(Fore.RED, Fore.RESET))
@@ -534,7 +586,7 @@ Selecciona lo que quieras hacer
 4) Ver estadisticas
 5) Salir del Juego
 """)
-        while True:
+        while True: #validacion para la opcion de menu elegida por el usuario
             try:
                 elegir = int(input("{}Ingrese su opcion: {}".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
                 if elegir < 1 or elegir > 5:
