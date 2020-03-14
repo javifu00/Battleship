@@ -1,25 +1,26 @@
 from Usuario import Usuario
 from random import randint
-from Naves import Portaviones, Fragata, Submarinos
+import Naves
+from Naveshijas import Portaviones, Fragata, Submarinos
 from time import sleep
 from colorama import Fore
-#valores para crear los barcos
 tablero = []
+#Valores para crear los barcos
 numero_filas = 10
 numero_columnas = 10
-orientaciones = ("Vertical", "Horizontal") #tupla que se usara para definir aleatoriamente la orientacion de los barcos mayores a 1 posicion
-lista_ubicacion_barco = []  #lista donde se ubicaran las posiciones de cada uno de los barcos
+orientaciones = ("Vertical", "Horizontal") #Tupla que se usara para definir aleatoriamente la orientacion de los barcos mayores a 1 posicion
+lista_ubicacion_barco = []  #Lista donde se ubicaran las posiciones de cada uno de los barcos
 lista_temporal = []
 coordenadas_portaviones = []
 coordenadas_fragata = []
 coordenadas_submarinos = []
-#valores para llevar el conteo de los disparos
+#Valores para llevar el conteo de los disparos
 disparos_elegidos = []
 disparos_efectuados = 0
 disparos_acertados = 0
 disparos_fallidos = 0
 disparos_repetidos = 0
-#listas de estadisticas
+#Listas de estadisticas
 lista_usuarios = []
 lista_ranking = []
 usuario_partida = []
@@ -119,7 +120,7 @@ def crear_tablero(tablero):
 
 def mostrar_tablero(tablero):
     """
-    esta funcion se encarga de imprimir el tablero listo para jugar y que se vea mejor
+    Se encarga de imprimir el tablero listo para jugar y que se vea mejor
     """
     numeros_de_fila = []
     for x in range(1, numero_columnas+1):
@@ -132,10 +133,10 @@ def mostrar_tablero(tablero):
         else: print(str(w + 1) + " " + " ".join(str(x) for x in tablero[w]))
     print("\n")
 
-#definiciones para ubicar los barcos
+#Definiciones para ubicar los barcos
 def ubicar_portaviones():
     """
-    definicion que ubica el barco mas grande (3 posiciones)
+    Definicion que ubica el barco mas grande (3 posiciones)
     """
     tamano = Portaviones.tamano #se importa el tamano del barco de su clase
     cantidad = Portaviones.cantidad #se importa la cantidad de barcos de este tamano desde su clase
@@ -172,7 +173,7 @@ def ubicar_portaviones():
 
 def ubicar_fragata():
     """
-    se encarga de ubicar el segundo barco mas grande (2 posiciones)
+    Se encarga de ubicar el segundo barco mas grande (2 posiciones)
     """
     tamano = Fragata.tamano
     cantidad = Fragata.cantidad
@@ -226,7 +227,7 @@ def ubicar_fragata():
 
 def ubicar_submarino():
     """
-    se encarga de ubicar las naves mas pequenas (1 posicion)
+    Se encarga de ubicar las naves mas pequenas (1 posicion)
     """
     tamano = Submarinos.tamano
     cantidad = Submarinos.cantidad
@@ -249,7 +250,7 @@ def ubicar_submarino():
 
 def ubicar_naves():
     """
-    se encarga de llamar a cada una de las funciones para ubicar los barcos por orden,
+    Se encarga de llamar a cada una de las funciones para ubicar los barcos por orden,
     se borra el tablero existente para crear uno nuevo y que la partida empiece con un tablero sin modificaciones
     y con los barcos ya ubicados
     """
@@ -261,7 +262,7 @@ def ubicar_naves():
 
 def juego():
     """
-    funcion que contiene todo lo que sucede desde que se empieza a jugar,
+    Funcion que contiene todo lo que sucede desde que se empieza a jugar hasta que se termina,
     tiene los contadores para las categorias de disparo y puntaje
     """
     ubicar_naves()
@@ -294,7 +295,7 @@ def juego():
                     raise  ValueError
                 break
             except ValueError:
-                print("{}No existe dicha fila{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+                print("{}No existe dicha columna{}".format(Fore.LIGHTRED_EX, Fore.RESET))
         tiro_elegido = (elegir_fila, elegir_columna) #cada tiro se almacena en una lista
         if tiro_elegido[0] == 24:
             print("Has accedido a un cheat code, los barcos estan en: ",lista_ubicacion_barco)
@@ -341,7 +342,6 @@ def juego():
         print("Buena estrategia, pero hay que mejorar(o buscar los cheat codes)")
     elif disparos_efectuados > 70:
         print("{}Considérese Perdedor, tiene que mejorar{}".format(Fore.RED, Fore.RESET))
-    sleep(0.7)
     print("\nCargando tus estadisticas :| .......... pssss deberias probar el numero de kobe en fila\n")
     sleep(2.5)
     for x in usuario_partida: #usuario_partida almacena el usuario de cada partida, se borra la lista cuando se ingresa otro jugador
@@ -375,9 +375,10 @@ def juego():
     with open("Basedatos.txt", "w") as bd: #se reescribira el txt con los datos del usuario que jugo la partida actualizados
         bd.writelines(datos)
 
+#Funciones para las estadisticas
 def top_10():
     """
-    lee el documento Basedatos.txt y almacena en una lista los 10 usuarios con el puntaje mas alto
+    Lee el documento Basedatos.txt y almacena en una lista los 10 usuarios con el puntaje mas alto
     y los muestra en orden
     """
     print("\n")
@@ -399,7 +400,7 @@ def top_10():
 
 def puntos_genero():
     """
-    se saca el puntaje total para cada genero
+    Calcula el puntaje total para cada genero
     """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
@@ -419,13 +420,13 @@ def puntos_genero():
             puntos_femeninos += genero[4]
         elif genero[3] == " Ninguno":
             puntos_ninguno += genero[4]
-    print("Los puntos totales por usuarios masculinos son: {}".format(puntos_masculinos))
-    print("Los puntos totales por usuarios femeninos son: {}".format(puntos_femeninos))
-    print("Los puntos totales por usuarios que decidieron no especificar su genero son: {}".format(puntos_ninguno))
+    print("Puntos totales por usuarios masculinos: {}".format(puntos_masculinos))
+    print("Puntos totales por usuarios femeninos: {}".format(puntos_femeninos))
+    print("Puntos totales por usuarios que no especificaron su genero: {}".format(puntos_ninguno))
 
 def usuarios_edades():
     """
-    muestra el rango de edad de los usuarios que mas han jugado
+    Muestra el rango de edad de los usuarios que mas han jugado
     """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
@@ -434,9 +435,9 @@ def usuarios_edades():
     lista_adultos = []
     lista_pures = []
     lista_viejos = []
-    for x in datos:
+    for x in datos: #se va a leer las edades de cada uno de los usuarios en la base de datos y se almacenan en listas segmentadas por edades
         edades = x[:-1].split(",")
-        edad = int(edades[4])
+        edad = int(edades[2])
         if edad >= 5 and edad <= 18:
             lista_ninos.append(edades)
         elif edad >= 19 and edad <= 45:
@@ -445,7 +446,8 @@ def usuarios_edades():
             lista_pures.append(edades)
         elif edad >= 61 and edad <= 100:
             lista_viejos.append(edades)
-    cantidad_ninos = len(lista_ninos)
+    #se calcula la cantidad de usuarios en cada lista por edades y se ingresan las cantidades en otra lista 
+    cantidad_ninos = len(lista_ninos) 
     lista_max_edades.append(str(cantidad_ninos))
     cantidad_adultos = len(lista_adultos)
     lista_max_edades.append(str(cantidad_adultos))
@@ -453,6 +455,7 @@ def usuarios_edades():
     lista_max_edades.append(str(cantidad_pures))
     cantidad_viejos = len(lista_viejos)
     lista_max_edades.append(str(cantidad_viejos))
+    #se calcula el maximo valor de la lista y se compara con cada uno de los valores obtenidos en las listas por cada rango de edad
     maximo = max(lista_max_edades)
     rango = ""
     if int(maximo) == cantidad_ninos:
@@ -467,7 +470,7 @@ def usuarios_edades():
 
 def promedio_disparos():
     """
-    saca el promedio de la cantidad de disparos para ganar entre todos los usuarios 
+    Calcula el promedio de la cantidad de disparos para ganar entre todos los usuarios 
     """
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
@@ -478,11 +481,12 @@ def promedio_disparos():
         lista_disparos.append(lista)
         disparos_totales += int(lista[5])
     disparos_totales /= len(lista_disparos)
+    disparos_totales = (round(disparos_totales, 2))
     print("Los disparos totales en promedio para ganar fueron: {}".format(disparos_totales))
 
 def ver(edit = False):
     """
-    le muestra al usuario los usuarios que ya estan registrados en la base de datos
+    Le muestra al usuario los usuarios que ya estan registrados en la base de datos para luego editarlos
     """
     print("\nEstos son los usuarios registrados actualmente:\n")
     usuarios = []
@@ -494,13 +498,13 @@ def ver(edit = False):
     if not edit:
         usuarios.sort(key= lambda user: user.username)
     for n, y in enumerate(usuarios): #imprime cada uno de los usuarios
-        print('='*5, n+1, '='*5)
+        print(Fore.LIGHTCYAN_EX + "="*10 + Fore.YELLOW, n+1, Fore.LIGHTRED_EX + "="*10, Fore.RESET)
         print(y)
         print("\n")
 
 def actualizar_datos(elegir):
     """
-    muestra los datos que se pueden cambiar, el usuario selecciona el que quiera modificar e ingresa el nuevo valor
+    Muestra los datos que se pueden cambiar, el usuario selecciona el que quiera modificar e ingresa el nuevo valor
     """
     print("""
 ¿Qué dato desea modificar?
@@ -569,7 +573,7 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
 
 def titulo():
     """
-    muestra la presentacion inicial del programa
+    Muestra el titulo inicial del programa
     """
     print("\n" + Fore.WHITE + " "*70 + "SAMAN")
     sleep(1)
@@ -582,7 +586,7 @@ def titulo():
 
 def main():
     """
-    se va a mostrar el menu principal y se llaman a todas las funciones para correr el programa
+    Se va a mostrar el menu principal y se llaman a todas las funciones para correr el programa
     """
     titulo()
     top_10() #muestra el top10 cada vez que se inicie el juego
@@ -591,19 +595,19 @@ def main():
     print("{}No lo creo JAJAJA{}".format(Fore.RED, Fore.RESET))
     continuar_jugando = True
     while continuar_jugando:
-        sleep(1.5)
         print("""
-Selecciona lo que quieras hacer
+        Menu        
 1) Jugar una partida
-2) Editar un usuario
-3) Ver el leaderboard
-4) Ver estadisticas
-5) Salir del Juego
+2) Ver todos los usuarios
+3) Editar un usuario
+4) Ver el leaderboard
+5) Ver estadisticas
+6) Salir del Juego
 """)
         while True: #validacion para la opcion de menu elegida por el usuario
             try:
-                elegir = int(input("{}Ingrese su opcion: {}".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
-                if elegir < 1 or elegir > 5:
+                elegir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
+                if elegir < 1 or elegir > 6:
                     raise  ValueError
                 break
             except ValueError:
@@ -612,9 +616,10 @@ Selecciona lo que quieras hacer
             print("\n")
             lista_usuarios.append(datos_usuario())
             juego()
+            print("\n{}1) Volver al menu \n{}2) Salir {}".format(Fore.LIGHTBLUE_EX, Fore.LIGHTRED_EX, Fore.RESET))
             while True: 
                 try:
-                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    seguir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
                     if seguir < 1 or seguir > 2:
                         raise  ValueError
                     break
@@ -624,13 +629,12 @@ Selecciona lo que quieras hacer
                 continuar_jugando = True
             else: continuar_jugando = False
         elif elegir == 2:
-            print("\n")
-            ver(edit = True)
-            seleccion = int(input("Seleccione el usuario que desee actualizar: "))
-            actualizar_datos(seleccion)
+            ver(edit=False)
+            sleep(1.5)
+            print("\n{}1) Volver al menu \n{}2) Salir {}".format(Fore.LIGHTBLUE_EX, Fore.LIGHTRED_EX, Fore.RESET))
             while True: 
                 try:
-                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    seguir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
                     if seguir < 1 or seguir > 2:
                         raise  ValueError
                     break
@@ -640,10 +644,26 @@ Selecciona lo que quieras hacer
                 continuar_jugando = True
             else: continuar_jugando = False
         elif elegir == 3:
-            top_10()
+            print("\n")
+            ver(edit = True)
+            with open("Basedatos.txt", "r") as bd:
+                total = bd.readlines()
+            largo = len(total)
+            while True:
+                try:
+                    seleccion = int(input("Seleccione el usuario que desee actualizar: "))
+                    if seleccion > int(largo) or seleccion < 1:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            actualizar_datos(seleccion)
+            sleep(1)
+            print("Su usuario ha sido actualizado correctamente")
+            print("\n{}1) Volver al menu \n{}2) Salir {}".format(Fore.LIGHTBLUE_EX, Fore.LIGHTRED_EX, Fore.RESET))
             while True: 
                 try:
-                    seguir = int(input("Ingresa una de las opciones:\n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    seguir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
                     if seguir < 1 or seguir > 2:
                         raise  ValueError
                     break
@@ -653,15 +673,12 @@ Selecciona lo que quieras hacer
                 continuar_jugando = True
             else: continuar_jugando = False
         elif elegir == 4:
-            print("\n")
-            promedio_disparos()
+            top_10()
             sleep(1.5)
-            puntos_genero()
-            sleep(1.5)
-            usuarios_edades()
+            print("\n{}1) Volver al menu \n{}2) Salir {}".format(Fore.LIGHTBLUE_EX, Fore.LIGHTRED_EX, Fore.RESET))
             while True: 
                 try:
-                    seguir = int(input("Ingresa una de las opciones: \n{}1) Volver al menu {}\n{}2) Salir {}\n".format(Fore.LIGHTBLUE_EX, Fore.RESET, Fore.LIGHTCYAN_EX, Fore.RESET)))
+                    seguir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
                     if seguir < 1 or seguir > 2:
                         raise  ValueError
                     break
@@ -671,9 +688,27 @@ Selecciona lo que quieras hacer
                 continuar_jugando = True
             else: continuar_jugando = False
         elif elegir == 5:
+            print("\n")
+            promedio_disparos()
+            puntos_genero()
+            usuarios_edades()
+            sleep(1.5)
+            print("\n{}1) Volver al menu \n{}2) Salir {}".format(Fore.LIGHTBLUE_EX, Fore.LIGHTRED_EX, Fore.RESET))
+            while True: 
+                try:
+                    seguir = int(input("{}Ingrese su opcion:{} ".format(Fore.LIGHTYELLOW_EX, Fore.RESET)))
+                    if seguir < 1 or seguir > 2:
+                        raise  ValueError
+                    break
+                except ValueError:
+                    print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            if seguir == 1:
+                continuar_jugando = True
+            else: continuar_jugando = False
+        elif elegir == 6:
             continuar_jugando = False
-    print("Te deseamos un feliz dia, gracias por jugar Battleship\n")
-    sleep(1,25)
+    print("Te deseamos un feliz dia, gracias por jugar " + Fore.LIGHTBLUE_EX + "███ " + "BATTLESHIP" + " ███" + Fore.RESET)
+    sleep(1.25)
     top_10()
 
 main()

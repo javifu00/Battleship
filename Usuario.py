@@ -1,4 +1,7 @@
 class Usuario:
+    """
+    Clase donde se deteminan los valores de cada usuario que juegue (username, nombre, edad, genero, puntaje, disparos efectuados)
+    """
     def __init__(self, username, nombre, edad, genero, puntaje=1, disparos_efectuados=100):
         self.username = username
         self.nombre = nombre
