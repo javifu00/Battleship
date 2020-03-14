@@ -109,6 +109,7 @@ def datos_usuario():
             return Usuario(username, nombre, edad, genero, puntaje, disparos_efectuados)
             username_repetido = False
 
+#Funciones para el tablero
 def crear_tablero(tablero): 
     """
     Se creara la matriz 10x10 para el tablero
@@ -133,10 +134,10 @@ def mostrar_tablero(tablero):
         else: print(str(w + 1) + " " + " ".join(str(x) for x in tablero[w]))
     print("\n")
 
-#Definiciones para ubicar los barcos
+#Funciones para ubicar los barcos
 def ubicar_portaviones():
     """
-    Definicion que ubica el barco mas grande (3 posiciones)
+    Funcion que ubica el barco mas grande (3 posiciones)
     """
     tamano = Portaviones.tamano #se importa el tamano del barco de su clase
     cantidad = Portaviones.cantidad #se importa la cantidad de barcos de este tamano desde su clase
@@ -484,6 +485,7 @@ def promedio_disparos():
     disparos_totales = (round(disparos_totales, 2))
     print("Los disparos totales en promedio para ganar fueron: {}".format(disparos_totales))
 
+#Funciones para editar datos
 def ver(edit = False):
     """
     Le muestra al usuario los usuarios que ya estan registrados en la base de datos para luego editarlos
