@@ -4,6 +4,7 @@ import Naves
 from Naveshijas import Portaviones, Fragata, Submarinos
 from time import sleep
 from colorama import Fore
+import re
 tablero = []
 #Valores para crear los barcos
 numero_filas = 10
@@ -76,11 +77,11 @@ def datos_usuario():
                 validacion_username = username.islower()
             usuario_partida.append(username)
             nombre = input("Ingrese su nombre completo: ")
-            verificacion_nombre = nombre.replace(" ", "").isalpha()
-            while verificacion_nombre == False: #Validacion para nombre
-                    print("{}Su nombre solo puede tener letras{}".format(Fore.LIGHTRED_EX, Fore.RESET))
-                    nombre = input("Ingrese su nombre completo: ")
-                    verificacion_nombre = nombre.replace(" ", "").isalpha()
+            validacion_nombre = bool(re.fullmatch('[A-Za-z]{2,25}( [A-Za-z]{2,25})+?', nombre))
+            while validacion_nombre == False:
+                print("{}Este nombre no es valido{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+                nombre = input("Ingrese su nombre completo: ")
+                validacion_nombre = bool(re.fullmatch('[A-Za-z]{2,25}( [A-Za-z]{2,25})+?', nombre))
             nombre = nombre.title()
             while True: #Validacion para edad
                 try:
@@ -278,6 +279,8 @@ def juego():
         usuario = x
     print("¿Estas listo para jugar {}? eso espero porque no hay vuelta atras\nCargando........ :/\n".format(usuario))
     sleep(3)
+    print("Mi flota esta compuesta por \n- {} \n- {} \n- {}\n Preparate para empezar\n".format(Portaviones.caracteristicas(Portaviones), Fragata.caracteristicas(Fragata), Submarinos.caracteristicas(Submarinos)))
+    sleep(3)
     mostrar_tablero(tablero)
     while len(lista_ubicacion_barco) > 0:
         while True: #validacion para la fila ingresada por el usuario
@@ -390,7 +393,6 @@ def top_10():
         y = x[:-1].split(",")
         usuarios_top.append(y)
     usuarios_top.sort(key=lambda usuarios_top: int(usuarios_top[4]), reverse=True) #ordena la lista de los usuarios por el puntaje
-    print(usuarios_top)
     print(Fore.LIGHTRED_EX, " "*70, "TOP 10", Fore.RESET)
     usuarios = []
     for x in usuarios_top: #se almacenaran solo los 10 primeros usuarios en otra lista y se mostraran
@@ -450,13 +452,13 @@ def usuarios_edades():
             lista_viejos.append(edades)
     #se calcula la cantidad de usuarios en cada lista por edades y se ingresan las cantidades en otra lista 
     cantidad_ninos = len(lista_ninos) 
-    lista_max_edades.append(str(cantidad_ninos))
+    lista_max_edades.append(cantidad_ninos)
     cantidad_adultos = len(lista_adultos)
-    lista_max_edades.append(str(cantidad_adultos))
+    lista_max_edades.append(cantidad_adultos)
     cantidad_pures = len(lista_pures)
-    lista_max_edades.append(str(cantidad_pures))
+    lista_max_edades.append(cantidad_pures)
     cantidad_viejos = len(lista_viejos)
-    lista_max_edades.append(str(cantidad_viejos))
+    lista_max_edades.append(cantidad_viejos)
     #se calcula el maximo valor de la lista y se compara con cada uno de los valores obtenidos en las listas por cada rango de edad
     maximo = max(lista_max_edades)
     rango = ""
@@ -515,9 +517,16 @@ def actualizar_datos(elegir):
 2 - Nombre
 3 - Edad
 4 - Género
-Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
+Ni el puntaje ni los disparos los puedes cambiar, que pensabas?
     """)
-    eleccion = int(input("Ingrese una opción: "))
+    while True:
+        try:
+            eleccion = int(input("Ingrese una opción: "))
+            if eleccion < 1 or eleccion > 4:
+                raise  ValueError
+            break
+        except ValueError:
+            print("{}La opcion ingresada no es valida{}".format(Fore.LIGHTRED_EX, Fore.RESET))
     with open("Basedatos.txt", "r") as bd:
         datos = bd.readlines()
         user = datos[elegir - 1][:-1].split(",")
@@ -532,13 +541,12 @@ Ni el puntaje ni los disparos los puedes cambiar, no seas chiguire
         usuario_partida.append(user[eleccion - 1])
     elif eleccion == 2:
         user[eleccion - 1] = input("Ahora ingrese su nuevo nombre: ")
-        verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
-        while verificacion_nombre == False: #validacion para el nuevo nombre
-                print("{}Su nombre solo puede tener letras{}".format(Fore.LIGHTRED_EX, Fore.RESET))
-                user[eleccion - 1] = input("Ingrese su nombre completo: ")
-                verificacion_nombre = user[eleccion - 1].replace(" ", "").isalpha()
-        user[eleccion - 1] = user[eleccion - 1].title()
-        user[eleccion - 1] = " " + user[eleccion - 1]  
+        validacion_nombre = bool(re.fullmatch('[A-Za-z]{2,25}( [A-Za-z]{2,25})+?', user[eleccion - 1]))
+        while validacion_nombre == False:
+            print("{}Este nombre no es valido{}".format(Fore.LIGHTRED_EX, Fore.RESET))
+            user[eleccion - 1] = input("Ingrese su nombre completo: ")
+            validacion_nombre = bool(re.fullmatch('[A-Za-z]{2,25}( [A-Za-z]{2,25})+?', user[eleccion - 1]))
+        user[eleccion - 1] = " " + user[eleccion - 1].title()  
     elif eleccion == 3:
         while True: #Validacion para la nueva edad
             try:
@@ -714,5 +722,4 @@ def main():
     sleep(1.25)
     top_10()
 
-# main()
-top_10()
+main()

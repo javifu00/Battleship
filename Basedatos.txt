@@ -1,13 +1,18 @@
-elpietro, Pietro Rodriguez, 58, Masculino, 56, 26
-labarba, James, 32, Masculino, 54, 27
+elpietro, Pietro Rodriguez, 57, Masculino, 56, 26
+labarba, James Harden, 32, Masculino, 54, 27
 javifu00, Javier Fuenmayor, 19, Masculino, 60, 24
 alex10, Alex Morgan, 35, Femenino, 58, 25
 lukita, Luka Doncic, 21, Masculino, 32, 38
 badbunny, Benito, 35, Masculino, 78, 15
 elbromas, Bromas, 48, Masculino, 28, 40
-planb, Chencho Corleone, 45, Masculino, 8, 50
+planb, Chencho Corleone, 45, Ninguno, 8, 50
 billylesh, Billie Eilish, 19, Femenino, 32, 38
-larosalia99, La Rosalia, 23, Femenino, 48, 30
+larosalia99, La Rosalia, 25, Femenino, 48, 30
 thejudge, Aaron Judge, 23, Masculino, 48, 30
 trumpeta, Donald Trump, 68, Masculino, 70, 19
 coronavirus, Corona Virus, 100, Ninguno, 90, 9
+nohillary, Hillary Clinton, 76, Femenino, 20, 44
+lavero98, Vero Gomez, 38, Femenino, 46, 31
+ginobili20, Manu Ginobili, 40, Masculino, 66, 21
+viniciusnomete1, Vinicius Junior, 22, Ninguno, 12, 48
+elrector, Benjamin, 66, Masculino, 86, 11

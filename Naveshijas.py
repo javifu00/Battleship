@@ -10,7 +10,7 @@ class Portaviones:
         self.cantidad = cantidad
         super().__init__(orientacion, ubicacion)
     def caracteristicas(self):
-        return self.tamano, self.cantidad
+        return "{} Portavion que ocupa {} posiciones y tiene la capacidad de aterrizar helicopteros en el para transportar las tropas".format(self.cantidad, self.tamano)
 class Fragata:
     """
     Clase donde se almacenan los datos especificos de la Fragata (tamano, cantidad)
@@ -22,7 +22,7 @@ class Fragata:
         self.cantidad = cantidad
         super().__init__(orientacion, ubicacion)
     def caracteristicas(self):
-        return self.tamano, self.cantidad
+        return "{} Fragata que ocupa {} posiciones y tiene la capacidad de comunicarse con tierra y otros miembro de la flota".format(self.cantidad, self.tamano)
 class Submarinos:
     """
     Clase donde se almacenan los datos especificos de los Submarinos (tamano, cantidad)
@@ -34,4 +34,4 @@ class Submarinos:
         self.cantidad = cantidad
         super().__init__(ubicacion)
     def caracteristicas(self):
-        return self.tamano, self.cantidad   
+        return "{} Submarinos que ocupan {} posicion y que tienen la capacidad de sumergirse y emerger del agua".format(self.cantidad, self.tamano)  
