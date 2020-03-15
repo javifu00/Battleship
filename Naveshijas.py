@@ -1,7 +1,7 @@
 import Naves
 class Portaviones:
     """
-    Clase donde se almacenan los datos especificos del Portaviones (tamano, cantidad)
+    Clase donde se almacenan los datos especificos del Portaviones (tamano=3, cantidad=1)
     """
     tamano = 3
     cantidad = 1
@@ -13,7 +13,7 @@ class Portaviones:
         return "{} Portavion que ocupa {} posiciones y tiene la capacidad de aterrizar helicopteros en el para transportar las tropas".format(self.cantidad, self.tamano)
 class Fragata:
     """
-    Clase donde se almacenan los datos especificos de la Fragata (tamano, cantidad)
+    Clase donde se almacenan los datos especificos de la Fragata (tamano=2, cantidad=1)
     """
     tamano = 2
     cantidad = 1
@@ -25,7 +25,7 @@ class Fragata:
         return "{} Fragata que ocupa {} posiciones y tiene la capacidad de comunicarse con tierra y otros miembro de la flota".format(self.cantidad, self.tamano)
 class Submarinos:
     """
-    Clase donde se almacenan los datos especificos de los Submarinos (tamano, cantidad)
+    Clase donde se almacenan los datos especificos de los Submarinos (tamano=1, cantidad=4)
     """
     tamano = 1
     cantidad = 4
